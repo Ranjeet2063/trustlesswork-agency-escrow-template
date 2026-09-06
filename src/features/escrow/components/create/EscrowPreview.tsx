@@ -144,7 +144,7 @@ export const EscrowPreview = ({ data }: { data: EscrowPreviewData }) => {
           value={formatAsset(data.fee.platformFeeAmount, data.asset)}
         />
         <Row
-          label={`Protocol fee (${formatFeePercent(data.fee.protocolFeeBps)})`}
+          label={`Protocol fee (est. ${formatFeePercent(data.fee.protocolFeeBps)})`}
           value={formatAsset(data.fee.protocolFeeAmount, data.asset)}
         />
         <Row
@@ -154,6 +154,11 @@ export const EscrowPreview = ({ data }: { data: EscrowPreviewData }) => {
         />
         {data.dueDate && <Row label="Due date" value={data.dueDate} />}
         <Row label="Reference" value={data.engagementReference || "—"} />
+        {data.fee.estimateNotice && (
+          <p className="pt-1 text-[11px] text-neutral-500 dark:text-neutral-400">
+            * {data.fee.estimateNotice}
+          </p>
+        )}
       </div>
     </div>
   );

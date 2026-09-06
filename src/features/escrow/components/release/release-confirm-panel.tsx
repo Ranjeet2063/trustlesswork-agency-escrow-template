@@ -25,10 +25,10 @@ export const ReleaseConfirmPanel = ({
         <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
         <div className="space-y-2">
           <p className="text-sm font-semibold">
-            Confirm release of {formatAmount(netAmount)} {asset} to {payeeName}?
+            Confirm release of ~{formatAmount(netAmount)} {asset} (est. net) to {payeeName}?
           </p>
           <p className="text-sm leading-6 text-muted-foreground">
-            Releasing completes the protected payment. The net amount is sent to
+            Releasing completes the protected payment. The estimated net amount is sent to
             the payee and applicable platform and protocol fees are routed
             automatically. This action is final and cannot be undone.
           </p>

@@ -56,7 +56,7 @@ export function FundingSummaryCard({ escrow }: { escrow: AgencyEscrow }) {
             </dd>
           </div>
           <div className="flex items-start justify-between gap-6 py-3">
-            <dt className="text-muted-foreground">Trustless Work protocol fee</dt>
+            <dt className="text-muted-foreground">Trustless Work protocol fee (est.)</dt>
             <dd className="text-right">
               <span className="font-medium">{(breakdown.protocolFeeBps / 100).toFixed(2)}%</span>
               <span className="block text-xs text-muted-foreground">
@@ -71,6 +71,11 @@ export function FundingSummaryCard({ escrow }: { escrow: AgencyEscrow }) {
             </dd>
           </div>
         </dl>
+        {breakdown.estimateNotice && (
+          <p className="text-xs text-muted-foreground">
+            * {breakdown.estimateNotice}
+          </p>
+        )}
 
         <div className="space-y-2 border-t border-border pt-5">
           <p className="text-sm font-medium">Acceptance criteria</p>

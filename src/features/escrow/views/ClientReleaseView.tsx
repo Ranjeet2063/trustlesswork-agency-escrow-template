@@ -102,7 +102,7 @@ export const ClientReleaseView = ({ escrowId }: ClientReleaseViewProps) => {
       await releaseMutation.mutateAsync();
       setConfirming(false);
       toast.success("Payment released", {
-        description: `The protected payment of ${formatAmount(breakdown.netAmount)} ${escrow.payment.asset} is complete.`,
+        description: `The protected payment of ~${formatAmount(breakdown.netAmount)} ${escrow.payment.asset} (est. net) is complete.`,
       });
     } catch (error) {
       toast.error("Release failed", {

@@ -4,6 +4,7 @@ import {
   calculateFeeBreakdown,
   DEFAULT_PLATFORM_FEE_BPS,
   DEFAULT_TW_PROTOCOL_FEE_BPS,
+  OBSERVED_TESTNET_PROTOCOL_FEE_BPS,
 } from "./fees.ts";
 
 test("calculateFeeBreakdown — 100 USDC standard testnet scenario (30 bps platform + 30 bps protocol)", () => {
@@ -16,6 +17,10 @@ test("calculateFeeBreakdown — 100 USDC standard testnet scenario (30 bps platf
   assert.equal(breakdown.totalFeeAmount, 0.6);
   assert.equal(breakdown.netAmount, 99.4);
   assert.equal(breakdown.isEstimate, true);
+  assert.match(
+    breakdown.estimateNotice ?? "",
+    /estimate based on observed testnet protocol release fees/,
+  );
 });
 
 test("calculateFeeBreakdown — 50 USDC escrow scenario (PR #37 / issue #20 benchmark)", () => {
@@ -25,13 +30,16 @@ test("calculateFeeBreakdown — 50 USDC escrow scenario (PR #37 / issue #20 benc
   assert.equal(breakdown.protocolFeeAmount, 0.15);
   assert.equal(breakdown.totalFeeAmount, 0.3);
   assert.equal(breakdown.netAmount, 49.7);
+  assert.equal(breakdown.isEstimate, true);
 });
 
-test("calculateFeeBreakdown — default options match 30 bps platform and 30 bps protocol", () => {
+test("calculateFeeBreakdown — default options match 30 bps platform and observed testnet protocol fee", () => {
   const breakdown = calculateFeeBreakdown(100);
   assert.equal(breakdown.platformFeeBps, DEFAULT_PLATFORM_FEE_BPS);
+  assert.equal(breakdown.protocolFeeBps, OBSERVED_TESTNET_PROTOCOL_FEE_BPS);
   assert.equal(breakdown.protocolFeeBps, DEFAULT_TW_PROTOCOL_FEE_BPS);
   assert.equal(breakdown.netAmount, 99.4);
+  assert.equal(breakdown.isEstimate, true);
 });
 
 test("calculateFeeBreakdown — zero platform fee preserves protocol fee deduction", () => {
@@ -77,7 +85,7 @@ test("calculateFeeBreakdown — rejects invalid platform fee bps", () => {
     /Platform fee basis points must be between 0 and 10000/,
   );
   assert.throws(
-    () => calculateFeeBreakdown(100, 2.5 as any, 30),
+    () => calculateFeeBreakdown(100, 2.5 as unknown as number, 30),
     /Platform fee basis points must be between 0 and 10000/,
   );
 });

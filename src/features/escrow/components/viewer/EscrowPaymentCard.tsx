@@ -48,7 +48,7 @@ export const EscrowPaymentCard = ({ escrow }: EscrowPaymentCardProps) => {
           </div>
           <div>
             <dt className={viewerLabelClass}>
-              Protocol fee ({formatFeePercent(breakdown.protocolFeeBps)})
+              Protocol fee (est. {formatFeePercent(breakdown.protocolFeeBps)})
             </dt>
             <dd className={`mt-1 ${viewerMutedClass}`}>
               {formatAmount(breakdown.protocolFeeAmount, escrow.payment.asset)}
@@ -61,6 +61,11 @@ export const EscrowPaymentCard = ({ escrow }: EscrowPaymentCardProps) => {
             </dd>
           </div>
         </dl>
+        {breakdown.estimateNotice && (
+          <p className="text-[11px] text-slate-500">
+            * {breakdown.estimateNotice}
+          </p>
+        )}
         <p className="text-xs text-slate-500">
           Fee address <WalletAddress address={escrow.fee.platformAddress} />
         </p>

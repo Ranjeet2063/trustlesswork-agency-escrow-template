@@ -42,18 +42,23 @@ export const ReleaseFeeBreakdown = ({
         </div>
         <div className="flex items-center justify-between gap-4">
           <span className="text-muted-foreground">
-            Trustless Work protocol fee ({formatFeeRate(breakdown.protocolFeeBps)})
+            Trustless Work protocol fee (est. {formatFeeRate(breakdown.protocolFeeBps)})
           </span>
           <span className="font-medium">
             −{formatAmount(breakdown.protocolFeeAmount)} {asset}
           </span>
         </div>
         <div className="flex items-center justify-between gap-4 border-t pt-3">
-          <span className="font-semibold">Net to payee</span>
+          <span className="font-semibold">Estimated net to payee</span>
           <span className="text-lg font-semibold">
             {formatAmount(breakdown.netAmount)} {asset}
           </span>
         </div>
+        {breakdown.estimateNotice && (
+          <p className="pt-2 text-xs text-muted-foreground">
+            * {breakdown.estimateNotice}
+          </p>
+        )}
       </CardContent>
     </Card>
   );

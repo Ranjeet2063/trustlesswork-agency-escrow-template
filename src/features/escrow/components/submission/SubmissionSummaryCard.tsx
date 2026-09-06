@@ -89,7 +89,7 @@ export const SubmissionSummaryCard = ({ escrow }: SubmissionSummaryCardProps) =>
             value={`- ${formatAmount(fee.platformFeeAmount, escrow.payment.asset)}`}
           />
           <Row
-            label={`Trustless Work protocol fee (${fee.protocolFeeBps / 100}%)`}
+            label={`Trustless Work protocol fee (est. ${fee.protocolFeeBps / 100}%)`}
             value={`- ${formatAmount(fee.protocolFeeAmount, escrow.payment.asset)}`}
           />
           <Row
@@ -98,6 +98,11 @@ export const SubmissionSummaryCard = ({ escrow }: SubmissionSummaryCardProps) =>
           />
           {dueDate ? <Row label="Due date" value={dueDate} /> : null}
         </dl>
+        {fee.estimateNotice && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            * {fee.estimateNotice}
+          </p>
+        )}
       </CardContent>
     </Card>
   )
